@@ -1,4 +1,5 @@
 require "octopress-include-tag/version"
+require "octopress-include-tag/ink-plugin"
 require "octopress-tag-helpers"
 require "jekyll"
 
