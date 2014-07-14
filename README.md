@@ -2,6 +2,10 @@
 
 This tag replaces Jekyll's include and adds support for conditional rendering, in-line filters and including partials from Octopress Ink plugins.
 
+[![Build Status](https://travis-ci.org/octopress/include-tag.svg)](https://travis-ci.org/octopress/include-tag)
+[![Gem Version](http://img.shields.io/gem/v/octopress-include-tag.svg)](https://rubygems.org/gems/octopress-include-tag)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://octopress.mit-license.org)
+
 ## Installation
 
 Add this line to your application's Gemfile:
