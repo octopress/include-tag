@@ -1,0 +1,29 @@
+---
+partial: foo.html
+---
+{% assign some_bool = true %}
+
+## Testing a simple include
+Testing Include → {% include foo.html %}
+
+## Include from var
+Testing Include → {% include page.partial %}
+
+## Local var passing
+Testing Include var_test → {% include foo.html some_var="var_test" %}
+
+## Filter testing
+TESTING INCLUDE → {% include foo.html | upcase %}
+'' → '{% include foo.html | upcase unless true %}'
+
+## Conditional Include
+'' → '{% include foo.html unless true %}'
+'' → '{% include foo.html unless some_bool %}'
+'' → '{% include foo.html unless site.name == 'Your New Jekyll Site' %}'
+Testing Include → {% include foo.html if true %}
+Testing Include → {% include foo.html if site.name == 'Your New Jekyll Site' %}
+Testing Include var_test → {% include foo.html some_var="var_test" if some_bool %}
+
+## Ternary include
+Testing Include → {% include (false ? bar.html : foo.html ) %}
+Testing Include → {% include (some_bool ? foo.html : theme:greet.html) %}

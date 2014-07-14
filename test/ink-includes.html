@@ -1,0 +1,13 @@
+---
+---
+{% assign some_bool = true %}
+
+
+## Plugin Includes
+include from plugin → {% include test-plugin:some-include.html %}
+Yo Dawg, I heard you like includes. → {% include test-plugin:greet.html greeting="Yo Dawg" %}
+'' → '{% include test-plugin:greet.html greeting="Yo Dawg" unless some_bool %}'
+Yo Dawg, I heard you like includes. → {% include test-plugin:greet.html greeting="Yo Dawg" if some_bool %}
+
+## Override plugin include
+Overrides plugin include → {% include test-plugin:bar.html %}
