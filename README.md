@@ -1,6 +1,6 @@
 # Octopress Include Tag
 
-This tag replaces Jekyll's include and adds support for conditional rendering, in-line filters and including partials from Octopress Ink plugins.
+This replaces Jekyll's include tag and adds support for conditional rendering, in-line filters and including partials from Octopress Ink plugins.
 
 [![Build Status](https://travis-ci.org/octopress/include-tag.svg)](https://travis-ci.org/octopress/include-tag)
 [![Gem Version](http://img.shields.io/gem/v/octopress-include-tag.svg)](https://rubygems.org/gems/octopress-include-tag)
@@ -19,6 +19,11 @@ And then execute:
 Or install it yourself as:
 
     $ gem install octopress-include-tag
+
+Next add it to your gems list in Jekyll's `_config.yml`
+
+    gems:
+      - octopress-include-tag
 
 ## Usage
 
