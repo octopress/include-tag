@@ -1,5 +1,4 @@
 require "octopress-include-tag/version"
-require "octopress-include-tag/ink-plugin"
 require "octopress-tag-helpers"
 require "jekyll"
 
@@ -63,3 +62,14 @@ module Octopress
 end
 
 Liquid::Template.register_tag('include', Octopress::Tags::IncludeTag::Tag)
+
+if defined? Octopress::Docs
+  Octopress::Docs.add({
+    name:        "Octopress Include Tag",
+    description: "Replaces Jekyll's include tag and adds conditional rendering, in-line filters and Octopress Ink features.",
+    path:        File.expand_path(File.join(File.dirname(__FILE__), "../")),
+    type:        "tag",
+    source_url:  "https://github.com/octopress/include-tag"
+  })
+end
+
