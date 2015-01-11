@@ -1,7 +1,7 @@
 module Octopress
   module Tags
-    module IncludeTag
-      VERSION = "1.0.1"
+    module Include
+      VERSION = "1.0.2"
     end
   end
 end

@@ -5,7 +5,7 @@ require 'octopress-include-tag/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "octopress-include-tag"
-  spec.version       = Octopress::Tags::IncludeTag::VERSION
+  spec.version       = Octopress::Tags::Include::VERSION
   spec.authors       = ["Brandon Mathis"]
   spec.email         = ["brandon@imathis.com"]
   spec.summary       = %q{A powerful include tag with conditions, filters and more}

@@ -4,7 +4,7 @@ require "jekyll"
 
 module Octopress
   module Tags
-    module IncludeTag
+    module Include
       class Tag < Liquid::Tag
         PLUGIN_SYNTAX = /(.+?):(\S+)/
 
@@ -61,11 +61,13 @@ module Octopress
   end
 end
 
-Liquid::Template.register_tag('include', Octopress::Tags::IncludeTag::Tag)
+Liquid::Template.register_tag('include', Octopress::Tags::Include::Tag)
 
 if defined? Octopress::Docs
   Octopress::Docs.add({
     name:        "Octopress Include Tag",
+    gem:         "octopress-include-tag",
+    version:     Octopress::Tags::Include::VERSION,
     description: "Replaces Jekyll's include tag and adds conditional rendering, in-line filters and Octopress Ink features.",
     path:        File.expand_path(File.join(File.dirname(__FILE__), "../")),
     type:        "tag",

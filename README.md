@@ -6,51 +6,64 @@ This replaces Jekyll's include tag and adds support for conditional rendering, i
 [![Gem Version](http://img.shields.io/gem/v/octopress-include-tag.svg)](https://rubygems.org/gems/octopress-include-tag)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://octopress.mit-license.org)
 
+
 ## Installation
 
-Add this line to your application's Gemfile:
+If you're using bundler add this gem to your site's Gemfile in the `:jekyll_plugins` group:
 
-    gem 'octopress-include-tag'
+    group :jekyll_plugins do
+      gem 'octopress-include-tag'
+    end
 
-And then execute:
+Then install the gem with Bundler
 
     $ bundle
 
-Or install it yourself as:
+To install manually without bundler:
 
     $ gem install octopress-include-tag
 
-Next add it to your gems list in Jekyll's `_config.yml`
+Then add the gem to your Jekyll configuration.
 
     gems:
-      - octopress-include-tag
+      -octopress-include-tag
 
 ## Usage
 
 Use this just like the regular Jekyll include tag.
 
-    {% include foo.html %}                // renders _includes/foo.html
-    {% include foo.html happy="yep"  %}   // samea as above but {{ include.happy }} == "yep"
+```
+{% include foo.html %}                // renders _includes/foo.html
+{% include foo.html happy="yep"  %}   // samea as above but {{ include.happy }} == "yep"
+```
 
 Include partials stored as a variable.
 
-    {% assign post_sidebar = "post_sidebar.html" %}
-    {% include post_sidebar %}   // renders _includes/post_sidebar.html
+```
+{% assign post_sidebar = "post_sidebar.html" %}
+{% include post_sidebar %}   // renders _includes/post_sidebar.html
+```
 
 Include partials conditionally, using `if`, `unless` and ternary logic.
 
-    {% include sidebar.html if site.theme.sidebar %}
-    {% include comments.html unless page.comments == false %}
-    {% include (post ? post_sidebar : page_sidebar) %}
+```
+{% include sidebar.html if site.theme.sidebar %}
+{% include comments.html unless page.comments == false %}
+{% include (post ? post_sidebar : page_sidebar) %}
+```
 
 Filter included partials.
 
-    {% include foo.html %}           //=> Yo, what's up
-    {% include foo.html | upcase %}  //=> YO, WHAT'S UP
+```
+{% include foo.html %}           //=> Yo, what's up
+{% include foo.html | upcase %}  //=> YO, WHAT'S UP
+```
 
 Yes, it can handle a complex combination of features… but can you?
 
-    {% include (post ? post_sidebar : page_sidebar) | smart_quotes unless site.theme.sidebar == false %}
+```
+{% include (post ? post_sidebar : page_sidebar) | smart_quotes unless site.theme.sidebar == false %}
+```
 
 ### Include partials with an Octopress Ink plugin.
 
@@ -76,23 +89,28 @@ render partials for the RSS feed.
       </entry>
     {% endfor %}
 
-
 If you want to make a change to the `entry.xml` partial, you could create your own version at `_plugins/feeds/includes/entry.xml`.
 Now whenever `{% include feeds:entry.xml %}` is called, the include tag will use *your* local partial instead of the plugin's partial.
 
 Note: To make overriding partials easier, you can copy all of a plugin's partials to your local override path with the Octopress Ink command:
 
-    octopress ink copy [plugin-slug] [options]
+```
+$ octopress ink copy [plugin-slug] [options]
+```
 
 To copy all includes from the feeds plugin, you'd run:
 
-    octopress ink copy feeds --includes
+```
+$ octopress ink copy feeds --includes
+```
 
 This will copy all of the partials from octopress-feeds to `_plugins/feeds/includes/`. Modify any of the partials, and delete those that you want to be read from the plugin.
 
 To list all partials from a plugin, run:
 
-    octopress ink list [plugin-slug] --includes
+```
+$ octopress ink list [plugin-slug] --includes
+```
 
 Note: When a plugin is updated, your local partials may be out of date, but will still override the plugin's partials. Be sure to watch changelogs and try to keep your modifications current.
 
