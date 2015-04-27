@@ -42,6 +42,7 @@ module Octopress
             partial = Liquid::Template.parse(content)
             content = context.stack {
               context['include'] = include_tag.parse_params(context)
+              context['plugin'] = Octopress::Ink::Plugins.plugin(plugin).config(context['lang'])
               partial.render!(context)
             }.strip
             

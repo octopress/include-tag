@@ -1,6 +1,10 @@
 # Changelog
 
-### 1.0.2 - 2015-01-11
+### 1.1.0 - 2015-04-26
+
+- New: Access Octopress Ink plugin configuration from within an include with the {{ plugin.config_var }}.
+
+### 1.0.3 - 2015-01-11
 
 - Minor docs updates
 
