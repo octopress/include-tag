@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.1 - 2015-05-11
+
+- Minor: loosened Jekyll dependency version for Jekyll 3 support.
+
 ### 1.1.0 - 2015-04-26
 
 - New: Access Octopress Ink plugin configuration from within an include with the {{ plugin.config_var }}.
