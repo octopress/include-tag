@@ -8,6 +8,7 @@ Testing Include → {% include foo.html %}
 
 ## Include from var
 Testing Include → {% include page.partial %}
+Testing Include → {% include {{ page.partial }} %}
 
 ## Local var passing
 Testing Include var_test → {% include foo.html some_var="var_test" %}
@@ -26,4 +27,4 @@ Testing Include var_test → {% include foo.html some_var="var_test" if some_boo
 
 ## Ternary include
 Testing Include → {% include (false ? bar.html : foo.html ) %}
-Testing Include → {% include (some_bool ? foo.html : theme:greet.html) %}
+Testing Include → {% include (some_bool ? foo.html : test-plugin:greet.html) %}
