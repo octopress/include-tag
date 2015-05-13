@@ -10,22 +10,24 @@ module Octopress
         attr_accessor :path
         attr_reader :tag_markup
         attr_reader :tag_name
+        attr_accessor :filters
 
         def initialize(tag_name, markup, tokens)
           @tag_markup = markup
           @tag_name = tag_name
 
-          plugin_matched = markup.strip.match(PLUGIN_SYNTAX)
-
-          if plugin_matched
-            @plugin = plugin_matched['plugin'].strip
-            @path = plugin_matched['path'].strip
+          if matched = markup.strip.match(PLUGIN_SYNTAX)
+            @plugin = matched['plugin'].strip
+            @path = matched['path'].strip
           end
 
+          # Trigger Jekyll's Include tag with compatible markup
+          #
           super(tag_name, safe_markup(markup).join(' '), tokens)
         end
 
-        # Strip specials out of markup so that it is suitable for Jekyll 
+        # Strip specials out of markup so that it is suitable for Jekyll include tag
+        #
         def safe_markup(markup)
           file = markup.strip.match(/\S+/)[0]
           params = ''
@@ -34,8 +36,8 @@ module Octopress
             params = matched[0]
           end
 
-          if match_var = tag_markup.match(VARIABLE_SYNTAX)
-            file = match_var['variable']
+          if matched = tag_markup.match(VARIABLE_SYNTAX)
+            file = matched['variable']
           end
 
           [file, params]
@@ -43,34 +45,25 @@ module Octopress
 
         def render(context)
 
-          # If conditional statements are present, only continue if they are true
-          #
-          markup = TagHelpers::Conditional.parse(tag_markup, context)
-          return unless markup
-
-          # If there are filters, store them for use later and strip them out of markup
-          #
-          if matched = markup.match(TagHelpers::Var::HAS_FILTERS)
-            markup = matched['markup']
-            filters = matched['filters']
-          end
-
-          # If there is a ternary expression, replace it with the true result
-          #
-          markup = TagHelpers::Var.evaluate_ternary(markup, context)
-
-          # Paths may be variables, check context to retrieve proper path
-          #
-          markup = TagHelpers::Path.parse(markup, context)
+          # Parse special markup until markup is simplified
+          return unless markup = parse_markup(context)
 
           # If markup references a plugin e.g. plugin-name:include-file.html
           #
           if matched = markup.strip.match(PLUGIN_SYNTAX)
 
+            # Call Octopress Ink to render the plugin's include file
+            #
             content = render_ink_include(matched['plugin'], matched['path'], context)
             
-          # Otherwise, use Jekyll's default include tag
           else
+
+            # use Jekyll's default include tag
+            #
+            # Why safe_markup again? In initialize we didn't know what the path would be becuase 
+            # we needed the context to parse vars and conditions. Now that we know them, we'll 
+            # reset @file and @params as intended in order to render with Jekyll's include tag.
+            # 
             @file, @params = safe_markup(markup)
             content = super(context).strip
           end
@@ -82,6 +75,35 @@ module Octopress
           content
         end
 
+        # Parses special markup, handling vars, conditions, and filters
+        # Returns:
+        #  - include path or nil if markup conditionals evaluate false
+        #
+        def parse_markup(context)
+          # If conditional statements are present, only continue if they are true
+          #
+          return unless markup = TagHelpers::Conditional.parse(tag_markup, context)
+
+          # If there are filters, store them for use later and strip them out of markup
+          #
+          if matched = markup.match(TagHelpers::Var::HAS_FILTERS)
+            markup = matched['markup']
+            @filters = matched['filters']
+          end
+
+          # If there is a ternary expression, replace it with the true result
+          #
+          markup = TagHelpers::Var.evaluate_ternary(markup, context)
+
+          # Paths may be variables, check context to retrieve proper path
+          #
+          markup = TagHelpers::Path.parse(markup, context)
+
+          markup
+        end
+
+        # Call Octopress Ink to render the plugin's include file
+        #
         def render_ink_include(plugin, file, context)
           begin
             content = Octopress::Ink::Plugins.include(plugin, path).read

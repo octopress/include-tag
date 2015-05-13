@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.2 - 2015-05-12
+- Fix: Liquid 3 support improved
+- Minor: Now supports Jekyll 2 and 3.
+
 ### 1.1.1 - 2015-05-11
 
 - Minor: loosened Jekyll dependency version for Jekyll 3 support.
