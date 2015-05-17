@@ -30,17 +30,17 @@ module Octopress
         #
         def safe_markup(markup)
           file = markup.strip.match(/\S+/)[0]
-          params = ''
+          params = []
 
-          if matched = markup.match(VALID_SYNTAX)
-            params = matched[0]
+          markup.scan(Regexp.compile('('+VALID_SYNTAX.to_s+')+')).each do |param|
+            params << param.first
           end
 
           if matched = tag_markup.match(VARIABLE_SYNTAX)
             file = matched['variable']
           end
 
-          [file, params]
+          [file, params.join(' ')]
         end
 
         def render(context)

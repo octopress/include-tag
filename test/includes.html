@@ -12,6 +12,7 @@ Testing Include → {% include {{ page.partial }} %}
 
 ## Local var passing
 Testing Include var_test → {% include foo.html some_var="var_test" %}
+Testing Include var_test - another var! → {% include foo.html some_var="var_test" another_var="awesome" %}
 
 ## Filter testing
 TESTING INCLUDE → {% include foo.html | upcase %}

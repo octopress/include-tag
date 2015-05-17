@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.1.3 - 2015-05-15
+- Fix: Better handling of multiple include parameters
+
 ### 1.1.2 - 2015-05-12
 - Fix: Liquid 3 support improved
 - Minor: Now supports Jekyll 2 and 3.
